@@ -1,0 +1,22 @@
+{
+  "name": "cuckd",
+  "version": "1.0.50",
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "test": "DATABASE_URL=\"postgresql://postgres:postgres@localhost:5432/test-db?schema=public\" bun prisma migrate reset --force && bun --env-file=\".env.test\" test:setup & bun test:run && kill %1 || kill %1",
+    "test:setup": "bun --env-file=.env.test src/index.ts",
+    "test:run": "bunx wait-on tcp:4000 && bun --env-file=\".env.test\" test"
+  },
+  "dependencies": {
+    "@elysiajs/eden": "^0.7.6",
+    "@prisma/client": "5.7.0",
+    "elysia": "latest"
+  },
+  "devDependencies": {
+    "@types/wait-on": "^5.3.4",
+    "bun-types": "latest",
+    "prisma": "^5.7.0",
+    "wait-on": "^7.2.0"
+  },
+  "module": "src/index.js"
+}
